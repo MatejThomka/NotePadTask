@@ -1,4 +1,4 @@
-package com.mth.notepadtask;
+package com.mth.notepadtask.api;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
