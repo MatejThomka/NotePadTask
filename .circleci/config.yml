@@ -29,9 +29,19 @@ jobs:
           name: "Run tests"
           command: "mvn test"
 
+  code-quality:
+    docker:
+      - image: cimg/openjdk:21.0.0
+    steps:
+      - checkout
+      - run:
+          name: "Run code quality checks"
+          command: "mvn clean verify"
+
 workflows:
   Notepad-CircleCi: 
     jobs:
       - compile-project
       - test-compatibility
       - tests
+      - code-quality
