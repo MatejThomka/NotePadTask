@@ -20,9 +20,18 @@ jobs:
           name: "Check test compatibility"
           command: "mvn test-compile"
 
+  tests:
+    docker:
+      - image: cimg/openjdk:21.0.0
+    steps:
+      - checkout
+      - run:
+          name: "Run tests"
+          command: "mvn test"
 
 workflows:
   Notepad-CircleCi: 
     jobs:
       - compile-project
       - test-compatibility
+      - tests
