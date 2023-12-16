@@ -65,7 +65,12 @@ public class TaskServiceEjb implements TaskService {
   }
 
   @Override
-  public Task getTask(Long id) {
+  public Task getTask(Long id) throws TaskException {
+
+    if (taskDao.getTask(id) == null) {
+      throw new TaskException("Task under this ID is missing!");
+    }
+
     return taskDao.getTask(id);
   }
 
