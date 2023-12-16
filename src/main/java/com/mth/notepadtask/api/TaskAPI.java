@@ -77,7 +77,15 @@ public class TaskAPI {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response getAllTask() {
-    List<Task> taskList = taskService.getAllTask();
-    return Response.status(Response.Status.FOUND).entity(taskList).build();
+
+    List<Task> taskList;
+
+    try {
+      taskList = taskService.getAllTask();
+    } catch (TaskException e) {
+      return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+    }
+
+    return Response.status(Response.Status.OK).entity(taskList).build();
   }
 }
