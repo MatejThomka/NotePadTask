@@ -70,8 +70,16 @@ public class TaskAPI {
   @Path("/get/{id}")
   @Produces(MediaType.APPLICATION_JSON)
   public Response getTask(@PathParam("id") Long id) {
-    Task task = taskService.getTask(id);
-    return Response.status(Response.Status.FOUND).entity(task).build();
+
+    Task task;
+
+    try {
+      task = taskService.getTask(id);
+    } catch (TaskException e) {
+      return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+    }
+
+    return Response.status(Response.Status.OK).entity(task).build();
   }
 
   @GET
