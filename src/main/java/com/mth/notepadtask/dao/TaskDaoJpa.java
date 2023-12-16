@@ -27,11 +27,8 @@ public class TaskDaoJpa implements TaskDao {
 
   @Override
   @Transactional
-  public void deleteTask(Long id) {
-    Task task = entityManager.find(Task.class, id);
-    if (task != null) {
-      entityManager.remove(task);
-    }
+  public void deleteTask(Task task) {
+    entityManager.remove(task);
   }
 
   @Override
