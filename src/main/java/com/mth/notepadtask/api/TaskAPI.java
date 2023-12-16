@@ -55,6 +55,7 @@ public class TaskAPI {
 
   @DELETE
   @Path("/delete/{id}")
+  @Produces(MediaType.APPLICATION_JSON)
   public Response deleteTask(@PathParam("id") Long id) {
 
     try {
