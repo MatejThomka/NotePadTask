@@ -70,7 +70,14 @@ public class TaskServiceEjb implements TaskService {
   }
 
   @Override
-  public List<Task> getAllTask() {
-    return taskDao.getAllTask();
+  public List<Task> getAllTask() throws TaskException {
+
+    List<Task> taskList = taskDao.getAllTask();
+
+    if (taskList.isEmpty()) {
+      throw new TaskException("There is nothing inside!");
+    }
+
+    return taskList;
   }
 }
