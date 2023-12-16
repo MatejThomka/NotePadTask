@@ -35,15 +35,19 @@ public class TaskServiceEjb implements TaskService {
       throw new TaskException("Task under this ID is missing!");
     }
 
-    if (task.getTitle() == null) {
-      task.setTitle(taskDao.getTask(id).getTitle());
+    Task updatedTask = taskDao.getTask(id);
+
+    if (task.getTitle() != null) {
+      updatedTask.setTitle(task.getTitle());
     }
 
-    if (task.getContent() == null) {
-      task.setContent(taskDao.getTask(id).getContent());
+    if (task.getContent() != null) {
+      updatedTask.setContent(task.getContent());
     }
 
-    return taskDao.updateTask(id, task);
+    taskDao.updateTask(updatedTask);
+
+    return updatedTask;
   }
 
   @Override
