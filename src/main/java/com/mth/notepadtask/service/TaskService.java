@@ -9,7 +9,7 @@ public interface TaskService {
 
   void createTask(Task task) throws TaskException;
   Task updateTask(Long id, Task task) throws TaskException;
-  void deleteTask(Long id);
+  void deleteTask(Long id) throws TaskException;
   Task getTask(Long id);
   List<Task> getAllTask();
 
