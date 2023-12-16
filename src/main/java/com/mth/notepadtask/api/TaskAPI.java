@@ -50,7 +50,7 @@ public class TaskAPI {
       return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
     }
 
-    return Response.status(Response.Status.ACCEPTED).entity("Task update successfully!\n\n" + updatedTask).build();
+    return Response.status(Response.Status.ACCEPTED).entity("Task update successfully!\n\n" + updatedTask.getTitle() + "\n\n" + updatedTask.getContent()).build();
   }
 
   @DELETE
