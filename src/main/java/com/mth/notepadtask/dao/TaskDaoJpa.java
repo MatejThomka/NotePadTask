@@ -21,11 +21,8 @@ public class TaskDaoJpa implements TaskDao {
 
   @Override
   @Transactional
-  public Task updateTask(Long id, Task task) {
-    Task updateTask = entityManager.find(Task.class, id);
-    updateTask.setTitle(task.getTitle());
-    updateTask.setContent(task.getContent());
-    return entityManager.merge(updateTask);
+  public void updateTask(Task task) {
+    entityManager.merge(task);
   }
 
   @Override
