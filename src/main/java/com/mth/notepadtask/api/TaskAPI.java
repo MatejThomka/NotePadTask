@@ -41,7 +41,8 @@ public class TaskAPI {
   @Path("/update/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response updateTask(@PathParam("id") Long id, Task task) {
+  public Response updateTask(@PathParam("id") Long id,
+                             Task task) {
     Task updatedTask;
 
     try {
@@ -50,11 +51,12 @@ public class TaskAPI {
       return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
     }
 
-    return Response.status(Response.Status.ACCEPTED).entity("Task update successfully!\n\n" + updatedTask.getTitle() + "\n\n" + updatedTask.getContent()).build();
+    return Response.status(Response.Status.OK).entity(updatedTask).build();
   }
 
   @DELETE
   @Path("/delete/{id}")
+  @Produces(MediaType.APPLICATION_JSON)
   public Response deleteTask(@PathParam("id") Long id) {
 
     try {
@@ -63,21 +65,37 @@ public class TaskAPI {
       return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
     }
 
-    return Response.status(Response.Status.NO_CONTENT).build();
+    return Response.status(Response.Status.OK).entity("Task " + id + " deleted successfully!").build();
   }
 
   @GET
   @Path("/get/{id}")
   @Produces(MediaType.APPLICATION_JSON)
   public Response getTask(@PathParam("id") Long id) {
-    Task task = taskService.getTask(id);
-    return Response.status(Response.Status.FOUND).entity(task).build();
+
+    Task task;
+
+    try {
+      task = taskService.getTask(id);
+    } catch (TaskException e) {
+      return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+    }
+
+    return Response.status(Response.Status.OK).entity(task).build();
   }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response getAllTask() {
-    List<Task> taskList = taskService.getAllTask();
-    return Response.status(Response.Status.FOUND).entity(taskList).build();
+
+    List<Task> taskList;
+
+    try {
+      taskList = taskService.getAllTask();
+    } catch (TaskException e) {
+      return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+    }
+
+    return Response.status(Response.Status.OK).entity(taskList).build();
   }
 }

@@ -1,10 +1,12 @@
 package com.mth.notepadtask.entity;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+@JsonPropertyOrder({"title", "content"})
 @Entity
 public class Task {
 
