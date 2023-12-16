@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface TaskDao {
 
-  void createTask(Task task) throws TaskException;
+  void createTask(Task task);
   void updateTask(Task task);
-  void deleteTask(Long id);
+  void deleteTask(Task task);
   Task getTask(Long id);
   List<Task> getAllTask();
 }
