@@ -41,7 +41,8 @@ public class TaskAPI {
   @Path("/update/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response updateTask(@PathParam("id") Long id, Task task) {
+  public Response updateTask(@PathParam("id") Long id,
+                             Task task) {
     Task updatedTask;
 
     try {
@@ -50,7 +51,7 @@ public class TaskAPI {
       return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
     }
 
-    return Response.status(Response.Status.ACCEPTED).entity("Task update successfully!\n\n" + updatedTask.getTitle() + "\n\n" + updatedTask.getContent()).build();
+    return Response.status(Response.Status.OK).entity(updatedTask).build();
   }
 
   @DELETE
@@ -64,7 +65,7 @@ public class TaskAPI {
       return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
     }
 
-    return Response.status(Response.Status.NO_CONTENT).build();
+    return Response.status(Response.Status.OK).entity("Task " + id + " deleted successfully!").build();
   }
 
   @GET
