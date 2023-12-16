@@ -56,7 +56,13 @@ public class TaskAPI {
   @DELETE
   @Path("/delete/{id}")
   public Response deleteTask(@PathParam("id") Long id) {
-    taskService.deleteTask(id);
+
+    try {
+      taskService.deleteTask(id);
+    } catch (TaskException e) {
+      return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+    }
+
     return Response.status(Response.Status.NO_CONTENT).build();
   }
 
