@@ -139,4 +139,29 @@ public class TaskServiceEjb implements TaskService {
 
     return taskList;
   }
+
+  /**
+   * Retrieves a filtered list of tasks based on the provided filter text.
+   * *
+   * This method delegates the task filtering to the underlying TaskDao,
+   *  which uses a JPQL query to search for tasks with titles or content
+   *  containing the specified filter text. If the retrieved list is empty,
+   *  indicating no tasks match the filter, a TaskException is thrown with
+   *  an appropriate error message.
+   *
+   * @param filterText - The filter text used to search for tasks.
+   * @return A list containing tasks that match the filter text.
+   * @throws TaskException - If there are no tasks matching the filter text.
+   */
+  @Override
+  public List<?> getFilteredTask(String filterText) throws TaskException {
+
+    List<?> taskList = taskDao.filterTask(filterText);
+
+    if (taskList.isEmpty()) {
+      throw new TaskException("There is nothing inside with this text!");
+    }
+
+    return taskList;
+  }
 }
