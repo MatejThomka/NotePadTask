@@ -4,6 +4,7 @@ import com.mth.notepadtask.entity.Task;
 import com.mth.notepadtask.exception.TaskException;
 import com.mth.notepadtask.service.TaskService;
 import jakarta.ejb.EJB;
+import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -12,12 +13,14 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/api/v1/task")
-public class TaskAPI {
+@ApplicationPath("/api/v1/task")
+public class TaskAPI extends Application {
 
   @EJB
   private TaskService taskService;
@@ -86,12 +89,16 @@ public class TaskAPI {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getAllTask() {
+  public Response getAllTask(@QueryParam("filter") String filter) {
 
-    List<Task> taskList;
+    List<?> taskList;
 
     try {
-      taskList = taskService.getAllTask();
+      if (filter != null && !filter.isEmpty()) {
+        taskList = taskService.getFilteredTask(filter);
+      } else {
+        taskList = taskService.getAllTask();
+      }
     } catch (TaskException e) {
       return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
     }
