@@ -10,4 +10,5 @@ public interface TaskDao {
   void deleteTask(Task task);
   Task getTask(Long id);
   List<Task> getAllTask();
+  List<?> filterTask(String filterQuery);
 }
