@@ -12,6 +12,5 @@ public interface TaskService {
   void deleteTask(Long id) throws TaskException;
   Task getTask(Long id) throws TaskException;
   List<Task> getAllTask() throws TaskException;
-
-
+  List<?> getFilteredTask(String filterText) throws TaskException;
 }
